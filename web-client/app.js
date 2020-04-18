@@ -47,7 +47,7 @@ const resourceServer = httpProxy.createProxyServer({
  * The local HTTP Resource Server
  */
 const localServer = httpProxy.createProxyServer({
-  target : 'https://localhost:6000',
+  target : 'https://localhost:5001',
   secure : false,
 });
 
@@ -57,7 +57,8 @@ const localServer = httpProxy.createProxyServer({
  * Resource Servers to 4000
  */
 https.createServer(options, (req, res) => {
-  if (req.url.startsWith('/api/tokeninfo') || req.url.startsWith('/oauth/token')) {
+  if (req.url.startsWith('/api/tokeninfo') || req.url.startsWith('/oauth/token')|| req.url.startsWith('/account')) {
+      console.log(req.url);
     authServer.web(req, res);
   } else if (req.url.startsWith('/login') || req.url.startsWith('/info') || req.url.startsWith('/api/protectedEndPoint')) {
     resourceServer.web(req, res);
@@ -68,7 +69,7 @@ https.createServer(options, (req, res) => {
 
 /**
  * Create a very simple static file server which listens
- * on port 6000, to serve up our local static content
+ * on port 5001, to serve up our local static content
  */
 const serve = serveStatic('views', { index: ['index.html', 'index.htm'] });
 // Create server
@@ -77,6 +78,6 @@ const server = https.createServer(options, (req, res) => {
   serve(req, res, done);
 });
 
-server.listen(6000);
+server.listen(5001);
 
 console.log('Web Client Server started on port 5000');
