@@ -43,6 +43,7 @@ exports.refreshToken = {
  *                            expired access tokens.
  */
 exports.db = {
+  name                     : 'CITIZENAUTH',
   timeToCheckExpiredTokens : 3600,
 };
 

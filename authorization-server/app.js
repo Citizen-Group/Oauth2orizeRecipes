@@ -7,6 +7,8 @@ const config         = require('./config');
 const db             = require('./db');
 const express        = require('express');
 const expressSession = require('express-session');
+const MongoStore     = require('connect-mongo')(expressSession);
+const mongoose       = require('mongoose');
 const fs             = require('fs');
 const https          = require('https');
 const oauth2         = require('./oauth2');
@@ -16,9 +18,22 @@ const site           = require('./site');
 const token          = require('./token');
 const user           = require('./user');
 
-console.log('Using MemoryStore for the data store');
-console.log('Using MemoryStore for the Session');
-const MemoryStore = expressSession.MemoryStore;
+console.log('Using MongoDB for the data store');
+const mongoURI = 'mongodb://localhost:27017/' + config.db.name;
+const dbConnectionOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  autoIndex: false, // Don't build indexes
+  poolSize: 10, // Maintain up to 10 socket connections
+  serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+  socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+  family: 4, // Use IPv4, skip trying IPv6
+};
+mongoose.connect(mongoURI, dbConnectionOptions);
+
+console.log('Using MongoStore for the Session');
 
 // Express configuration
 const app = express();
@@ -26,13 +41,21 @@ app.set('view engine', 'ejs');
 app.use(cookieParser());
 
 // Session Configuration
+// - https://github.com/expressjs/session
+// - https://www.npmjs.com/package/connect-mongo
 app.use(expressSession({
   saveUninitialized : true,
   resave            : true,
   secret            : config.session.secret,
-  store             : new MemoryStore(),
+  store             : new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: config.session.maxAge,
+  }),
   key               : 'authorization.sid',
-  cookie            : { maxAge: config.session.maxAge },
+  cookie            : {
+    maxAge: config.session.maxAge,
+    secure: true,
+  },
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -93,6 +116,7 @@ setInterval(() => {
 }, config.db.timeToCheckExpiredTokens * 1000);
 
 // TODO: Change these for your own certificates.  This was generated through the commands:
+// TODO: I run my products behind a proxy. This might be all removable?
 // openssl genrsa -out privatekey.pem 2048
 // openssl req -new -key privatekey.pem -out certrequest.csr
 // openssl x509 -req -in certrequest.csr -signkey privatekey.pem -out certificate.pem
