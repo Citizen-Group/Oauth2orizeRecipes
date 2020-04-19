@@ -32,7 +32,7 @@ const userSchema = new Schema({
   legalSignOffs:{
     name: { type: String },
     date: { type: Date },
-  }
+  },
 });
 
 // Virtual
@@ -44,21 +44,4 @@ userSchema.virtual('name').get(function () {
 // Creates auto incrementing id
 userSchema.plugin(AutoIncrement, { inc_field: 'id' });
 
-/**
- * Returns a user if it finds one, otherwise returns null if a user is not found.
- * @param   {String}  impID - The unique id of the user to find
- * @returns {Promise} resolved user if found, otherwise resolves undefined
- */
-exports.find = impID => Promise.resolve(this.find({ id: impID }));
-
-/**
- * Returns a user if it finds one, otherwise returns null if a user is not found.
- * @param   {String}   impUsername - The unique user name to find
- * @param   {Function} done        - The user if found, otherwise returns undefined
- * @returns {Promise} resolved user if found, otherwise resolves undefined
- */
-exports.findByUsername = impUsername =>
-  Promise.resolve(this.find({ username : impUsername }));
-
-
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Users', userSchema);

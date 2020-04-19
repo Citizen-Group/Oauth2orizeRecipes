@@ -111,6 +111,15 @@ app.use((err, req, res, next) => {
   }
 });
 
+// On Start add all the model files to be ready for use
+fs.readdirSync(`${__dirname}/db`).forEach((filename) => {
+  // eslint-disable-next-line no-bitwise
+  if (~filename.indexOf('.js')) {
+    // eslint-disable-next-line global-require
+    require(`${__dirname}/db/${filename}`);
+  }
+});
+
 // TODO: Change these for your own certificates.  This was generated through the commands:
 // TODO: I run my products behind a proxy. This might be all removable?
 // openssl genrsa -out privatekey.pem 2048
