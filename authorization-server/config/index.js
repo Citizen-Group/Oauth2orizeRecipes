@@ -55,5 +55,5 @@ exports.db = {
  */
 exports.session = {
   maxAge : 3600000 * 24 * 7 * 52,
-  secret : 'A Secret That Should Be Changed', // TODO: You need to change this secret to something that you choose for your secret
+  secret : 'a351c011dee8bc34f01b022a31de2102',
 };
