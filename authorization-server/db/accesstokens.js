@@ -60,24 +60,6 @@ exports.delete = (token) => {
 };
 
 /**
- * Removes expired access tokens. It does this by looping through them all and then removing the
- * expired ones it finds.
- * @returns {Promise} resolved with an associative of tokens that were expired
- */
-exports.removeExpired = () => {
-  const keys    = Object.keys(tokens);
-  const expired = keys.reduce((accumulator, key) => {
-    if (new Date() > tokens[key].expirationDate) {
-      const expiredToken = tokens[key];
-      delete tokens[key];
-      accumulator[key] = expiredToken; // eslint-disable-line no-param-reassign
-    }
-    return accumulator;
-  }, Object.create(null));
-  return Promise.resolve(expired);
-};
-
-/**
  * Removes all access tokens.
  * @returns {Promise} resolved with all removed tokens returned
  */

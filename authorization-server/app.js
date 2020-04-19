@@ -50,6 +50,7 @@ app.use(expressSession({
   store             : new MongoStore({
     mongooseConnection: mongoose.connection,
     ttl: config.session.maxAge,
+    autoRemove: 'native',
   }),
   key               : 'authorization.sid',
   cookie            : {
@@ -107,13 +108,6 @@ app.use((err, req, res, next) => {
     next();
   }
 });
-
-// From time to time we need to clean up any expired tokens
-// in the database
-setInterval(() => {
-  db.accessTokens.removeExpired()
-  .catch(err => console.error('Error trying to remove expired tokens:', err.stack));
-}, config.db.timeToCheckExpiredTokens * 1000);
 
 // TODO: Change these for your own certificates.  This was generated through the commands:
 // TODO: I run my products behind a proxy. This might be all removable?
