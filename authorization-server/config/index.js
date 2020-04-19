@@ -43,7 +43,9 @@ exports.refreshToken = {
  *                            expired access tokens.
  */
 exports.db = {
+  hostname                 : 'localhost',
   name                     : 'CITIZENAUTH',
+  port                     : 27017,
   timeToCheckExpiredTokens : 3600,
 };
 

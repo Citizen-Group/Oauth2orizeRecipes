@@ -19,7 +19,8 @@ const token          = require('./token');
 const user           = require('./user');
 
 console.log('Using MongoDB for the data store');
-const mongoURI = 'mongodb://localhost:27017/' + config.db.name;
+// TODO: This can be upgraded to take an user and pass and moving host for security in production
+const mongoURI = `mongodb://${config.db.hostname}:${config.db.port}/${config.db.name}`;
 const dbConnectionOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -91,9 +92,10 @@ app.get('/api/revoke', token.revoke);
 // static resources for stylesheets, images, javascript files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Catch all for error messages.  Instead of a stack
-// trace, this will log the json of the error message
-// to the browser and pass along the status with it
+/**
+ *  Catch all for error messages. Instead of a stack trace, this will log the json of
+ *  the error message to the browser and pass along the status with it
+ */
 app.use((err, req, res, next) => {
   if (err) {
     if (err.status == null) {
