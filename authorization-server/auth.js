@@ -1,7 +1,6 @@
 'use strict';
 
 const db                                   = require('./db');
-const mongoose                             = require('mongoose');
 const passport                             = require('passport');
 const { Strategy: LocalStrategy }          = require('passport-local');
 const { BasicStrategy }                    = require('passport-http');
@@ -16,9 +15,11 @@ const validate                             = require('./validate');
  * Anytime a request is made to authorize an application, we must ensure that
  * a user is logged in before asking them to approve the request.
  */
-passport.use(new LocalStrategy((impUsername, password, done) => {
-  mongoose.model('Users').find({ username : impUsername })
-  .then();
+passport.use(new LocalStrategy((username, password, done) => {
+  db.users.findByUsername(username)
+  .then(user => validate.user(user, password))
+  .then(user => done(null, user))
+  .catch(() => done(null, false));
 }));
 
 /**
