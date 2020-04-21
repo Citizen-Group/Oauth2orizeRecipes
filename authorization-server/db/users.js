@@ -11,7 +11,7 @@ exports.find = impId => mongoose.model('Users').findOne({ id : impId });
 
 /**
  * Returns a user if it finds one, otherwise returns null if a user is not found.
- * @param   {String}   username - The unique user name to find
+ * @param   {String}   impUsername - The unique user name to find
  * @returns {Promise} resolved user if found, otherwise resolves undefined
  */
 exports.findByUsername = impUsername => mongoose.model('Users').findOne({ username : impUsername });
