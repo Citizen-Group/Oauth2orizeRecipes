@@ -19,6 +19,7 @@ const token          = require('./token');
 const user           = require('./user');
 
 console.log('Using MongoDB for the data store');
+
 // TODO: This can be upgraded to take an user and pass and moving host for security in production
 const mongoURI = `mongodb://${config.db.hostname}:${config.db.port}/${config.db.name}`;
 const dbConnectionOptions = {
@@ -120,14 +121,40 @@ fs.readdirSync(`${__dirname}/db/schemas`).forEach((filename) => {
   }
 });
 
-// Hacky test code to seed a user
-mongoose.model('Users').create({
-  id       : '1',
-  username : 'bob',
-  password : 'secret',
-  name     : 'Bob Smith',
+// Hacky test code to seed the DB when empty
+mongoose.model('Users').find({}).then((doc) => {
+  if (doc.length === 0){
+    mongoose.model('Users').create({
+      id       : '1',
+      username : 'bob',
+      password : 'secret',
+      name     : 'Bob Smith',
+    });
+  }
 });
 
+mongoose.model('Clients').find({}).then((doc) => {
+  if (doc.length == 0){
+    mongoose.model('Clients').insertMany([{
+      id            : '1',
+      name          : 'Samplr',
+      clientId      : 'abc123',
+      clientSecret  : 'ssh-secret',
+    }, {
+      id            : '2',
+      name          : 'Samplr2',
+      clientId      : 'xyz123',
+      clientSecret  : 'ssh-password',
+    }, {
+      id            : '3',
+      name          : 'Samplr3',
+      clientId      : 'trustedClient',
+      clientSecret  : 'ssh-otherpassword',
+      trustedClient : true,
+    }], (err) => {
+    });
+  }
+});
 
 // TODO: Change these for your own certificates.  This was generated through the commands:
 // TODO: I run my products behind a proxy. This might be all removable?

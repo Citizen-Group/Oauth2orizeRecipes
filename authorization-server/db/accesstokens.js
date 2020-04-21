@@ -2,10 +2,16 @@
 
 const jwt = require('jsonwebtoken');
 
-// The access tokens.
-// You will use these to access your end point data through the means outlined
-// in the RFC The OAuth 2.0 Authorization Framework: Bearer Token Usage
-// (http://tools.ietf.org/html/rfc6750)
+/**
+ * The access tokens.
+ * You will use these to access your end point data through the means outlined
+ * in the RFC The OAuth 2.0 Authorization Framework: Bearer Token Usage
+ * (http://tools.ietf.org/html/rfc6750)
+ *
+ * This is kept in memory to protect against DB attacks.
+ * If you want to store these "live access" tokens they will need to be bCrypt'ed
+ * that would allow you to, reload the DB and keep peoples access.
+ */
 
 /**
  * Tokens in-memory data structure which stores all of the access tokens

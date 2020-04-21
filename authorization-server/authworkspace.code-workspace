@@ -2,6 +2,15 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "..\\readme-media"
+		},
+		{
+			"path": "..\\resource-server"
+		},
+		{
+			"path": "..\\web-client"
 		}
 	]
 }

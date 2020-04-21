@@ -3,8 +3,6 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-const Schema = mongoose.Schema;
-
 /**
  * This is the schema of the users that are allowed to connected to your authorization
  * server.
@@ -15,23 +13,13 @@ const Schema = mongoose.Schema;
  * name     : The name of your user
  */
 
-const userSchema = new Schema({
+const userSchema = new  mongoose.Schema({
   first_name: { type: String },
   last_name: { type: String },
   username: { type: String, unique: true, required: true },
-  password: { type: String },
+  password: { type: String, required: true },
   email: { type: String, lowercase: true, trim: true, unique: true },
   created: { type: Date, default: Date.now },
-  location: {
-    lat: { type: String },
-    lon: { type: String },
-    sdefID: { type: String },
-    sdefName: { type: String },
-  },
-  legalSignOffs:{
-    name: { type: String },
-    date: { type: Date },
-  },
 });
 
 // Virtual
