@@ -116,6 +116,6 @@ exports.protectedEndPoint = [
   (req, res) => {
     // You can send whatever you want, such as JSON, etc...
     // For a illustrative example, I'm just sending a string back
-    res.send('Successful Protected EndPoint Data Call '+ JSON.stringify(req.user));
+    res.send(`Successful Protected EndPoint Data Call ${JSON.stringify(req.user)}`);
   },
 ];
