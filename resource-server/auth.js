@@ -14,10 +14,10 @@ const request        = require('request');
  *
  * This strategy is used to authenticate users based on a username and password.
  * Anytime a request is made to authorize an application, we must ensure that
- * a user is logged in before asking them to approve the request.  The login
+ * a user is logged in before asking them to approve the request. The login
  * mechanism is going to use our server's client id/secret to authenticate/authorize
- * the user and get both an access and refresh token.  The sever *does not* store the
- * user's name and the server *does not* store the user's password.  Instead, using
+ * the user and get both an access and refresh token. The server *does not* store the
+ * user's name and the server *does not* store the user's password. Instead, using
  * the access token the server can reach endpoints that the user has been granted
  * access to.
  *

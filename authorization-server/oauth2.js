@@ -141,15 +141,15 @@ server.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, 
  * `authorization` middleware accepts a `validate` callback which is
  * responsible for validating the client making the authorization request.  In
  * doing so, is recommended that the `redirectURI` be checked against a
- * registered value, although security requirements may vary accross
- * implementations.  Once validated, the `done` callback must be invoked with
+ * registered value, although security requirements may vary across
+ * implementations. Once validated, the `done` callback must be invoked with
  * a `client` instance, as well as the `redirectURI` to which the user will be
  * redirected after an authorization decision is obtained.
  *
- * This middleware simply initializes a new authorization transaction.  It is
+ * This middleware simply initializes a new authorization transaction. It is
  * the application's responsibility to authenticate the user and render a dialog
  * to obtain their approval (displaying details about the client requesting
- * authorization).  We accomplish that here by routing through `ensureLoggedIn()`
+ * authorization). We accomplish that here by routing through `ensureLoggedIn()`
  * first, and rendering the `dialog` view.
  */
 exports.authorization = [

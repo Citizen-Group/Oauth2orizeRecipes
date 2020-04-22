@@ -44,5 +44,5 @@ exports.db = {
  */
 exports.session = {
   // TODO You need to change this secret to something that you choose for your secret
-  secret: 'A Secret That Should Be Changed',
+  secret: 'a351c011dee8bc34f01b022a31de2102',
 };
