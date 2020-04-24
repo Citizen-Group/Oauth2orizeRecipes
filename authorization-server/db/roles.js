@@ -13,7 +13,7 @@ exports.roles = (() => {
 
   ac.grant("admin")
     .extend("basic")
-    .extend("supervisor")
+    .extend("mod")
     .updateAny("profile")
     .deleteAny("profile");
 
