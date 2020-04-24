@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 /**
  * This is the configuration of the clients that are allowed to connected to your authorization
@@ -23,11 +23,20 @@ const mongoose = require('mongoose');
  */
 
 const clientSchema = new mongoose.Schema({
-  id            : { type: Number },
-  name          : { type: String },
-  clientId      : { type: String },
-  clientSecret  : { type: String },
-  trustedClient : { type: Boolean },
+  id: { type: Number },
+  name: { type: String },
+  clientId: { type: String },
+  clientSecret: { type: String },
+  trustedClient: { type: Boolean },
+  email: { type: String, required: true, trim: true },
+  password: { type: String, required: true },
+  role: {
+    type: String,
+    default: "basic",
+    enum: ["basic", "mod", "admin"],
+  },
+  permissions: [String],
+  accessToken: { type: String },
 });
 
-module.exports = mongoose.model('Clients', clientSchema);
+module.exports = mongoose.model("Clients", clientSchema);

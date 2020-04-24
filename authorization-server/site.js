@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const login    = require('connect-ensure-login');
-const passport = require('passport');
+const login = require("connect-ensure-login");
+const passport = require("passport");
 
 /**
  * Render the index.ejs or index-with-code.js depending on if query param has code or not
@@ -11,9 +11,9 @@ const passport = require('passport');
  */
 exports.index = (req, res) => {
   if (!req.query.code) {
-    res.render('index');
+    res.render("index");
   } else {
-    res.render('index-with-code');
+    res.render("index-with-code");
   }
 };
 
@@ -24,14 +24,17 @@ exports.index = (req, res) => {
  * @returns {undefined}
  */
 exports.loginForm = (req, res) => {
-  res.render('login');
+  res.render("login");
 };
 
 /**
  * Authenticate normal login page using strategy of authenticate
  */
 exports.login = [
-  passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }),
+  passport.authenticate("local", {
+    successReturnToOrRedirect: "/",
+    failureRedirect: "/login",
+  }),
 ];
 
 /**
@@ -42,7 +45,7 @@ exports.login = [
  */
 exports.logout = (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.redirect("/");
 };
 
 /**
@@ -54,6 +57,6 @@ exports.logout = (req, res) => {
 exports.account = [
   login.ensureLoggedIn(),
   (req, res) => {
-    res.render('account', { user: req.user });
+    res.render("account", { user: req.user });
   },
 ];

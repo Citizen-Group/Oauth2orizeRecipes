@@ -1,10 +1,10 @@
 {
   "name": "oauth2orize-web-client",
   "version": "6.3.4",
-  "author": "Frank Hassanabad <frankhassanabad@gmail.com>",  
+  "author": "Frank Hassanabad <frankhassanabad@gmail.com>",
   "description": "OAuth2 security recipes and examples based on OAuth2orize",
   "license": "MIT",
-  "main": "app.js",  
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/FrankHassanabad/Oauth2orizeRecipes.git"

@@ -248,4 +248,29 @@ validate.clientExistsForHttp = (client) => {
   return client;
 };
 
+
+// https://blog.soshace.com/implementing-role-based-access-control-in-a-node-js-application/
+
+/**
+ * Given a user, action and resource. The application will determine if the user has permissions
+ * @param   {Object}   req - The request
+ * @param   {Object}   res - The response
+ * @returns {undefined}
+ */
+validate.grantAccessForHTTP = function (action, resource) {
+  return async (req, res, next) => {
+    try {
+      const permission = roles.can(req.user.role)[action](resource);
+      if (!permission.granted) {
+        return res.status(401).json({
+          error: "You don't have enough permission to perform this action",
+        });
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
+};
+
 module.exports = validate;
